@@ -1,0 +1,46 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-virtualservice
+  namespace: apps
+spec:
+  hosts:
+  - "127.0.0.1"
+  gateways:
+  - app-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /frontend
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 80
+        subset: v1
+      weight: 80
+    - destination:
+        host: frontend
+        port:
+          number: 80
+        subset: v2
+      weight: 20
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: frontend-destination-rule
+  namespace: apps
+spec:
+  host: frontend
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
