@@ -15,6 +15,9 @@ Run in the following order.
 NB: these must be run sequentially, there are resources shared across steps creating dependencies.
 
 1 - [kind-cluster](./kind-cluster)
+
 2 - [istio-install](./instio-install)
+
 3 - [istio-ingress](./istio-ingress)
+
 4 - [traffic-splitting](./traffic-splitting)
