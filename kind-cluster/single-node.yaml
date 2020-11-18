@@ -1,0 +1,33 @@
+# following https://www.danielstechblog.io/local-kubernetes-setup-with-kind/
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+networking:
+  apiServerAddress: "127.0.0.1"
+  apiServerPort: 6443
+  # matches the default cluster subnet mask from azure
+  podSubnet: "10.240.0.0/16"
+  # matches the default kubernetes service address range for azure
+  serviceSubnet: "10.0.0.0/16"
+  #  I am disabling the default CNI plugin of KinD. So, I can use Calico as CNI plugin and for Kubernetes network policies
+  disableDefaultCNI: true
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 30000
+    hostPort: 80
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+  - containerPort: 30001
+    hostPort: 443
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+  - containerPort: 30002
+    hostPort: 15021
+    listenAddress: "127.0.0.1"
+    protocol: TCP
