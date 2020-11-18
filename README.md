@@ -16,7 +16,7 @@ NB: these must be run sequentially, there are resources shared across steps crea
 
 1 - [kind-cluster](./kind-cluster)
 
-2 - [istio-install](./instio-install)
+2 - [istio-install](./istio-install)
 
 3 - [istio-ingress](./istio-ingress)
 
