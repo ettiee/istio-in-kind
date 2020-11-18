@@ -1,11 +1,20 @@
-# Istio Investigation
+# Istio in kind
+
+Simple example running istio in kind.
 
 ## Prerequisites
 
-- Install kind
-- Install istioctl
+- Install [kind](https://github.com/kubernetes-sigs/kind) (tested with kind version 0.9.0)
+- Install [istioctl](https://istio.io/latest/docs/setup/getting-started/#download) (tested with 1.7.4)
+- Install [helm 3](https://helm.sh/)
 
-1 - `kind-setup`
-2 - `istio-setup`
+## Running instructions
 
+Run in the following order.
 
+NB: these must be run sequentially, there are resources shared across steps creating dependencies.
+
+1 - [kind-cluster](./kind-cluster)
+2 - [istio-install](./instio-install)
+3 - [istio-ingress](./istio-ingress)
+4 - [traffic-splitting](./traffic-splitting)
