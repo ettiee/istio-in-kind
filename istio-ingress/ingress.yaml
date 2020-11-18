@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: app-gateway
+  namespace: apps
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "127.0.0.1"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-virtualservice
+  namespace: apps
+spec:
+  hosts:
+  - "127.0.0.1"
+  gateways:
+  - app-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /frontend
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 80
