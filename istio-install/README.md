@@ -5,8 +5,24 @@ export ISTIO_VERSION=1.7.4
 curl -L https://istio.io/downloadIstio | sh -
 ```
 
+## Install istio to your cluster
 
-# Verify your istio setup
+Create `istio-system` namespace
+```
+kubectl apply -f namespace.yaml
+```
+
+Deploy istio operator
+```
+istioctl operator init
+```
+
+Install istio to your cluster
+```
+kubectl apply -f istio-cni.yaml
+```
+
+## Verify your istio setup
 
 Verify the health status of the Istio ingress gateway using the endpoint http://localhost:15021/healthz/ready.
 
